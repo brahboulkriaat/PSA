@@ -6,4 +6,8 @@ import androidx.room.RoomDatabase
 @Database(entities = [PsaEntity::class], version = 1)
 abstract class PsaDatabase: RoomDatabase() {
     abstract fun psaDao(): PsaDao
+
+    companion object {
+        const val DATABASE_NAME = "db_psa"
+    }
 }
