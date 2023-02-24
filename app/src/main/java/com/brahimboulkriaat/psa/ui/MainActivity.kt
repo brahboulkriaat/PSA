@@ -1,7 +1,6 @@
 package com.brahimboulkriaat.psa.ui
 
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -23,6 +22,10 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -41,9 +44,65 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@Composable
+private fun MainScreen(mainViewModel: MainViewModel) {
+    val navController = rememberNavController()
+    NavGraph(navController, mainViewModel)
+}
+
+@Composable
+private fun NavGraph(navController: NavHostController, mainViewModel: MainViewModel) {
+    NavHost(navController = navController, startDestination = "home") {
+
+        composable(route = "home") {
+            HomeScreen(mainViewModel = mainViewModel, navController = navController)
+        }
+
+        composable(
+            route = "details"/*,
+            arguments = listOf(navArgument("id") {
+                type = NavType.LongType
+                // defaultValue = 0L
+            }, navArgument("lon") {
+                type = NavType.FloatType
+                defaultValue = 0.0F
+            }, navArgument("lat") {
+                type = NavType.FloatType
+                defaultValue = 0.0F
+            })*/
+        ) {
+            DetailsScreen()
+        }
+
+        composable(route = "new") {
+            NewScreen()
+        }
+    }
+}
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MainScreen(mainViewModel: MainViewModel) {
+fun DetailsScreen() {
+    Scaffold( topBar = { TopAppBar(title = { Text("Details") }) }) {
+        Surface(modifier = Modifier.padding(it)) {
+
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun NewScreen() {
+    Scaffold( topBar = { TopAppBar(title = { Text("New") }) }) {
+        Surface(modifier = Modifier.padding(it)) {
+
+        }
+    }
+}
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun HomeScreen(mainViewModel: MainViewModel, navController: NavHostController) {
     Scaffold(
         topBar = { TopAppBar(title = { Text("Cities") }) },
         floatingActionButton = { NewCityFab(mainViewModel) }
@@ -67,14 +126,20 @@ fun MainScreen(mainViewModel: MainViewModel) {
                 key1 = Unit,
                 block = {
                     mainViewModel.fabOnClick.value =
-                        { Toast.makeText(context, "New City", Toast.LENGTH_SHORT).show() }
+                        {
+                            //Toast.makeText(context, "New City", Toast.LENGTH_SHORT).show()
+                            navController.navigate("new")
+                        }
                 })
 
             LaunchedEffect(
                 key1 = Unit,
                 block = {
                     mainViewModel.itemOnClick.value =
-                        { Toast.makeText(context, "Details", Toast.LENGTH_SHORT).show() }
+                        {
+                            // Toast.makeText(context, "Details", Toast.LENGTH_SHORT).show()
+                            navController.navigate("details")
+                        }
                 })
 
             CitiesList(listState, mainViewModel)
