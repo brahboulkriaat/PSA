@@ -35,60 +35,51 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             MaterialTheme {
-                /*CitiesList(cities = cities)
-
-                ExtendedFloatingActionButton(
-                    modifier = Modifier.padding(all = 8.dp),
-                    text = { Text(text = "New City") },
-                    icon = { Icon(
-                        imageVector = Icons.Rounded.Add,
-                        contentDescription = "Navigate FAB"
-
-                    ) },
-                    expanded = mainViewModel.isFabExpanded.value,
-                    onClick = { mainViewModel.fabOnClick.value.invoke()  },
-                    // containerColor = MaterialTheme.colorScheme.secondary
-                )*/
                 MainScreen(mainViewModel)
             }
         }
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MainScreen(mainViewModel: MainViewModel) {
+    Scaffold(
+        topBar = { TopAppBar(title = { Text("Cities") }) },
+        floatingActionButton = { NewCityFab(mainViewModel) }
+    ) {
+        Surface(modifier = Modifier.padding(it)) {
+            val context = LocalContext.current
+            val listState = rememberLazyListState()
+            val expandedFabState = remember {
+                derivedStateOf {
+                    listState.firstVisibleItemIndex == 0
+                }
+            }
 
-    val context = LocalContext.current
-    val listState = rememberLazyListState()
-    val expandedFabState = remember {
-        derivedStateOf {
-            listState.firstVisibleItemIndex == 0
+            LaunchedEffect(
+                key1 = expandedFabState.value,
+                block = {
+                    mainViewModel.isFabExpanded.value = expandedFabState.value
+                })
+
+            LaunchedEffect(
+                key1 = Unit,
+                block = {
+                    mainViewModel.fabOnClick.value =
+                        { Toast.makeText(context, "New City", Toast.LENGTH_SHORT).show() }
+                })
+
+            LaunchedEffect(
+                key1 = Unit,
+                block = {
+                    mainViewModel.itemOnClick.value =
+                        { Toast.makeText(context, "Details", Toast.LENGTH_SHORT).show() }
+                })
+
+            CitiesList(listState, mainViewModel)
         }
     }
-
-    LaunchedEffect(
-        key1 = expandedFabState.value,
-        block = {
-            mainViewModel.isFabExpanded.value = expandedFabState.value
-        })
-
-    LaunchedEffect(
-        key1 = Unit,
-        block = {
-            mainViewModel.fabOnClick.value =
-                { Toast.makeText(context, "New City", Toast.LENGTH_SHORT).show() }
-        })
-
-    LaunchedEffect(
-        key1 = Unit,
-        block = {
-            mainViewModel.itemOnClick.value =
-                { Toast.makeText(context, "Details", Toast.LENGTH_SHORT).show() }
-        })
-
-    CitiesList(listState, mainViewModel)
-
-    NewCityFab(mainViewModel)
 }
 
 @Composable
@@ -110,7 +101,11 @@ fun NewCityFab(mainViewModel: MainViewModel) {
 }
 
 @Composable
-private fun CitiesList(state: LazyListState, mainViewModel: MainViewModel, cities: List<City> = data) {
+private fun CitiesList(
+    state: LazyListState,
+    mainViewModel: MainViewModel,
+    cities: List<City> = data
+) {
     LazyColumn(state = state, modifier = Modifier.fillMaxSize()) {
         items(cities) { city ->
             CityItem(city, mainViewModel)
