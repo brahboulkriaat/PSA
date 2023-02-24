@@ -33,7 +33,7 @@ class RetrofitModule {
     @Singleton
     fun providesRetrofit(okHttpClient: OkHttpClient, gson: Gson): Retrofit =
         Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/data/3.0/")
+            .baseUrl("https://63f9026123ad39d6dd9804d8.mockapi.io/")
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson)).build()
 
