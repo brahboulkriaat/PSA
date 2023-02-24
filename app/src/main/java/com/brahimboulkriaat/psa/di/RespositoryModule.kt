@@ -14,7 +14,7 @@ import javax.inject.Singleton
 /*
 @InstallIn(SingletonComponent::class)
 @Module
-class RepositoryModule {
+object RepositoryModule {
 
     // On a nnoté PsaRespository avec @Inject donc pas besoin du @Provides
     @Provides
