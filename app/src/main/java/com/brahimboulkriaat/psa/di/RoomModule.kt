@@ -2,7 +2,7 @@ package com.brahimboulkriaat.psa.di
 
 import android.content.Context
 import androidx.room.Room
-import com.brahimboulkriaat.psa.room.PsaDao
+import com.brahimboulkriaat.psa.room.CityDao
 import com.brahimboulkriaat.psa.room.PsaDatabase
 import dagger.Module
 import dagger.Provides
@@ -21,5 +21,5 @@ class RoomModule {
 
     @Provides
     @Singleton
-    fun providePsaDao(psaDatabase: PsaDatabase): PsaDao = psaDatabase.psaDao()
+    fun providePsaDao(psaDatabase: PsaDatabase): CityDao = psaDatabase.psaDao()
 }
