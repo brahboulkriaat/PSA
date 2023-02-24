@@ -1,7 +1,7 @@
 package com.brahimboulkriaat.psa.repository
 
-import com.brahimboulkriaat.psa.mapper.EntityMapper
-import com.brahimboulkriaat.psa.mapper.NetworkMapper
+import com.brahimboulkriaat.psa.mapper.CityEntityMapper
+import com.brahimboulkriaat.psa.mapper.CityNetworkMapper
 import com.brahimboulkriaat.psa.model.City
 import com.brahimboulkriaat.psa.retrofit.CityService
 import com.brahimboulkriaat.psa.room.CityDao
@@ -15,8 +15,8 @@ import kotlin.Exception
 class CityRepository @Inject constructor(
     private val cityDao: CityDao,
     private val cityService: CityService,
-    private val entityMapper: EntityMapper,
-    private val networkMapper: NetworkMapper
+    private val entityMapper: CityEntityMapper,
+    private val networkMapper: CityNetworkMapper
 ) {
 
     suspend fun getAll(): Flow<DataState<List<City>>> = flow<DataState<List<City>>> {

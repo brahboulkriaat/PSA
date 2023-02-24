@@ -4,7 +4,7 @@ import com.brahimboulkriaat.psa.model.City
 import com.brahimboulkriaat.psa.room.CityEntity
 import javax.inject.Inject
 
-class EntityMapper @Inject constructor() : Mapper<CityEntity, City> {
+class CityEntityMapper @Inject constructor() : Mapper<CityEntity, City> {
     override fun mapFromEntity(entity: CityEntity): City =
         City(entity.id, entity.name, entity.lat, entity.lon)
 

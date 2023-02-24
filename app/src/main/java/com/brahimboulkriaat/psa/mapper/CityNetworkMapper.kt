@@ -4,7 +4,7 @@ import com.brahimboulkriaat.psa.model.City
 import com.brahimboulkriaat.psa.retrofit.CityNetwork
 import javax.inject.Inject
 
-class NetworkMapper @Inject constructor() : Mapper<CityNetwork, City> {
+class CityNetworkMapper @Inject constructor() : Mapper<CityNetwork, City> {
     override fun mapFromEntity(entity: CityNetwork): City =
         City(entity.id, entity.name, entity.lat, entity.lon)
 
