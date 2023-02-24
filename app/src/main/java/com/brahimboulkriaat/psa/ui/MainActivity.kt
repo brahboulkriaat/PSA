@@ -1,6 +1,7 @@
 package com.brahimboulkriaat.psa.ui
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -26,10 +27,15 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.brahimboulkriaat.psa.util.DataState
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    companion object {
+        private const val TAG = "MainActivity"
+    }
 
     private val mainViewModel: MainViewModel by viewModels()
 
@@ -41,6 +47,27 @@ class MainActivity : ComponentActivity() {
                 MainScreen(mainViewModel)
             }
         }
+
+        mainViewModel.responseState.observe(this) {
+            when (it) {
+                is DataState.Success<List<*>> -> {
+                    Log.d(TAG, "Success : ${it.data}")
+                    // displayProgressBar(false)
+                    // appendBlogTitles(it.result)
+                }
+                is DataState.Error -> {
+                    Log.d(TAG, "Error : ${it.error.message}")
+                    // displayProgressBar(false)
+                    // displayError(it.error.message)
+                }
+                else -> {
+                    Log.d(TAG, "Loading")
+                    // displayProgressBar(true)
+                }
+            }
+        }
+
+        mainViewModel.launchRequest()
     }
 }
 

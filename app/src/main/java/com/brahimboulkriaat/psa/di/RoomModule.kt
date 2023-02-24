@@ -21,5 +21,5 @@ class RoomModule {
 
     @Provides
     @Singleton
-    fun providePsaDao(psaDatabase: PsaDatabase): CityDao = psaDatabase.psaDao()
+    fun providesCityDao(psaDatabase: PsaDatabase): CityDao = psaDatabase.cityDao()
 }

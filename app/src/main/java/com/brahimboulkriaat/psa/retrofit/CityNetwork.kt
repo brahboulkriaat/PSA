@@ -3,7 +3,7 @@ package com.brahimboulkriaat.psa.retrofit
 import com.google.gson.annotations.Expose
 import com.google.gson.annotations.SerializedName
 
-class CityNetwork(
+data class CityNetwork(
     @SerializedName("id")
     @Expose
     val id: Long,

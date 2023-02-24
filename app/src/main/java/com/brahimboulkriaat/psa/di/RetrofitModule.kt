@@ -1,6 +1,6 @@
 package com.brahimboulkriaat.psa.di
 
-import com.brahimboulkriaat.psa.retrofit.PsaService
+import com.brahimboulkriaat.psa.retrofit.CityService
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -39,6 +39,6 @@ class RetrofitModule {
 
     @Provides
     @Singleton
-    fun providesPsaService(retrofit: Retrofit): PsaService =
-        retrofit.create(PsaService::class.java)
+    fun providesPsaService(retrofit: Retrofit): CityService =
+        retrofit.create(CityService::class.java)
 }

@@ -13,4 +13,6 @@ class EntityMapper @Inject constructor() : Mapper<CityEntity, City> {
 
     override fun mapFromEntities(entities: List<CityEntity>): List<City> =
         entities.map(::mapFromEntity)
+
+    fun mapToEntities(domainList: List<City>): List<CityEntity> = domainList.map(::mapToEntity)
 }
