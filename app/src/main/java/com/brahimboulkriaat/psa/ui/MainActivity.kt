@@ -27,9 +27,9 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.brahimboulkriaat.psa.model.City
 import com.brahimboulkriaat.psa.util.DataState
 import dagger.hilt.android.AndroidEntryPoint
-import com.brahimboulkriaat.psa.model.City as C
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -51,8 +51,9 @@ class MainActivity : ComponentActivity() {
 
         mainViewModel.responseState.observe(this) {
             when (it) {
-                is DataState.Success<Int> -> {
+                is DataState.Success<List<City>> -> { //TODO: Fix me
                     Log.d(TAG, "Success : ${it.data}")
+                    mainViewModel.cities.value = it.data
                     // displayProgressBar(false)
                     // appendBlogTitles(it.result)
                 }
@@ -200,7 +201,7 @@ private fun CitiesList(
     cities: List<City> = data
 ) {
     LazyColumn(state = state, modifier = Modifier.fillMaxSize()) {
-        items(cities) { city ->
+        items(mainViewModel.cities.value) { city ->
             CityItem(city, mainViewModel)
         }
     }
@@ -220,7 +221,7 @@ private fun CityItem(city: City, mainViewModel: MainViewModel) {
     }
 }
 
-private data class City(val id: Long, val name: String, val lat: Double, val lon: Double)
+//private data class City(val id: Long, val name: String, val lat: Double, val lon: Double)
 
 private val data = listOf<City>(
     City(id = 1, name = "Paris", lat = 0.0, lon = 0.0),
