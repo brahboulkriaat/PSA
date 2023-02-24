@@ -13,19 +13,19 @@ interface CityService {
     @GET("cities")
     suspend fun getAll(): List<CityNetwork>
 
-    @GET("cities")
-    suspend fun get(@Path("id") id: Long): CityNetwork
+    @GET("cities/{id}")
+    suspend fun get(@Path("id") id: Int): CityNetwork
 
     @POST("cities")
     suspend fun post(@Body cityNetwork: CityNetwork): CityNetwork
 
     @PUT("cities/{id}")
-    suspend fun put(@Path("id") id: Long, @Body city: CityNetwork): CityNetwork
+    suspend fun put(@Body city: CityNetwork, @Path("id") id: Int = city.id): CityNetwork
 
     @PATCH("cities/{id}")
     suspend fun patch(@Path("id") id: Long, @Body city: CityNetwork): CityNetwork
 
     @DELETE("cities/{id}")
-    suspend fun delete(@Path("id") id: Long, @Body city: CityNetwork): CityNetwork
+    suspend fun delete(@Path("id") id: Int): CityNetwork
 
 }

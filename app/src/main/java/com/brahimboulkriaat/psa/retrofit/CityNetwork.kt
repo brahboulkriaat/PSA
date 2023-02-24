@@ -6,7 +6,7 @@ import com.google.gson.annotations.SerializedName
 data class CityNetwork(
     @SerializedName("id")
     @Expose
-    val id: Long,
+    val id: Int,
 
     @SerializedName("name")
     @Expose

@@ -9,7 +9,7 @@ interface CityDao {
     suspend fun getAll(): List<CityEntity>
 
     @Query("SELECT * FROM ${CityEntity.ENTITY_NAME} WHERE id=:id")
-    suspend fun getById(id: Long): CityEntity
+    suspend fun get(id: Int): CityEntity
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(vararg psa: CityEntity): List<Long>

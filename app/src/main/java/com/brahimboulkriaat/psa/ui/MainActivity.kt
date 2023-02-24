@@ -29,6 +29,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.brahimboulkriaat.psa.util.DataState
 import dagger.hilt.android.AndroidEntryPoint
+import com.brahimboulkriaat.psa.model.City as C
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -50,7 +51,7 @@ class MainActivity : ComponentActivity() {
 
         mainViewModel.responseState.observe(this) {
             when (it) {
-                is DataState.Success<List<*>> -> {
+                is DataState.Success<Int> -> {
                     Log.d(TAG, "Success : ${it.data}")
                     // displayProgressBar(false)
                     // appendBlogTitles(it.result)
