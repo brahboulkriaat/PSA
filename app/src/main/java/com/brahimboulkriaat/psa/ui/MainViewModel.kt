@@ -23,12 +23,19 @@ class MainViewModel @Inject constructor(private val cityRepository: CityReposito
 
     val cities = mutableStateOf<List<City>>(listOf())
 
-    private val _responseState: MutableLiveData<DataState<List<City>>> = MutableLiveData()
-    val responseState: LiveData<DataState<List<City>>> get() = _responseState
+    private val _getAllResponseState: MutableLiveData<DataState<List<City>>> = MutableLiveData()
+    val getAllResponseState: LiveData<DataState<List<City>>> get() = _getAllResponseState
+
+    private val _createResponseState: MutableLiveData<DataState<City>> = MutableLiveData()
+    val createResponseState: LiveData<DataState<City>> get() = _createResponseState
 
     fun launchRequest() {
         viewModelScope.launch {
-            cityRepository.getAll().onEach { _responseState.value = it }.launchIn(viewModelScope)
+            cityRepository.getAll().onEach { _getAllResponseState.value = it }.launchIn(viewModelScope)
         }
+    }
+
+    fun createNewCity(name: String, lon: Double, lat: Double) = viewModelScope.launch {
+        cityRepository.create(City(id = 0, name = name, lon = lon, lat = lat)).onEach { _createResponseState.value = it }.launchIn(viewModelScope)
     }
 }

@@ -85,7 +85,14 @@ fun NewCityScreen(mainViewModel: MainViewModel, navController: NavHostController
 
             Box(modifier = Modifier.padding(40.dp, 0.dp, 40.dp, 0.dp)) {
                 if (isSending.value) CircularProgressIndicator() else Button(
-                    onClick = {},
+                    onClick = {
+                        mainViewModel.createNewCity(
+                            name.value.text,
+                            lon.value.text.toDouble(),
+                            lat.value.text.toDouble()
+                        )
+
+                    },
                     shape = RoundedCornerShape(50.dp),
                     modifier = Modifier
                         .fillMaxWidth()
