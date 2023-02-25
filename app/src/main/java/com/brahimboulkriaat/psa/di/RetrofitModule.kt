@@ -42,7 +42,7 @@ object RetrofitModule {
 
     @Provides
     @Singleton
-    @Named("OpenWeatherMap")
+    @Named("WeatherApi")
     fun providesRetrofitOpenWeatherMap(okHttpClient: OkHttpClient, gson: Gson): Retrofit =
         Retrofit.Builder()
             .baseUrl("https://api.openweathermap.org/data/2.5/")
