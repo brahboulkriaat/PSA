@@ -4,6 +4,9 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.brahimboulkriaat.psa.ui.screen.CityDetailsScreen
+import com.brahimboulkriaat.psa.ui.screen.HomeScreen
+import com.brahimboulkriaat.psa.ui.screen.NewCityScreen
 
 @Composable
 fun MainScreen(mainViewModel: MainViewModel) {

@@ -19,22 +19,21 @@ class CityRepository @Inject constructor(
     private val networkMapper: CityNetworkMapper
 ) {
 
-    suspend fun getAll(): Flow<DataState<List<City>>> = flow<DataState<List<City>>> {
-        emit(DataState.Loading)
+    suspend fun getAll(): Flow<DataState<List<City>>> = flow {
         delay(3000)
-
-        try {
+        /*try {
             val networkEntities = cityService.getAll()
             val domains = networkMapper.mapFromEntities(networkEntities)
             cityDao.insert(*entityMapper.mapToEntities(domains).toTypedArray())
             val cacheEntities = cityDao.getAll()
-            emit(DataState.Success<List<City>>(entityMapper.mapFromEntities(cacheEntities)))
+            emit(DataState.Success(entityMapper.mapFromEntities(cacheEntities)))
         } catch (e: Exception) {
             emit(DataState.Error(e))
-        }
+        }*/
+        emit(DataState.Error(java.lang.Exception()))
     }
 
-    suspend fun get(id: Int): Flow<DataState<City>> = flow <DataState<City>>{
+    suspend fun get(id: Int): Flow<DataState<City>> = flow {
         emit(DataState.Loading)
         delay(3000)
 
