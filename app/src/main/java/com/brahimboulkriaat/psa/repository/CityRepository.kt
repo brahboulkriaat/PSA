@@ -47,6 +47,7 @@ class CityRepository @Inject constructor(
     }
 
     suspend fun create(city: City): Flow<DataState<City>> = flow<DataState<City>> {
+        emit(DataState.Loading)
         try {
             val networkEntity = networkMapper.mapToEntity(city)
             val domain = networkMapper.mapFromEntity(cityService.post(networkEntity))
