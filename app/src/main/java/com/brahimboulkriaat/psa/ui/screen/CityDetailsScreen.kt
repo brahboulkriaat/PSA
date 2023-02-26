@@ -25,6 +25,7 @@ fun CityDetailsScreen(
                 getWeather(lon, lat)
                 val weatherState = weatherState.collectAsStateWithLifecycle(DataState.Loading)
                 when (weatherState.value) {
+                    is DataState.None -> {}
                     is DataState.Loading -> LoaderComponent()
                     is DataState.Error -> ErrorComponent(
                         onRetryClick = {

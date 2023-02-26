@@ -1,8 +1,6 @@
 package com.brahimboulkriaat.psa.ui
 
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.brahimboulkriaat.psa.model.City
@@ -32,8 +30,9 @@ class MainViewModel @Inject constructor(
         MutableStateFlow(DataState.Loading)
     val weatherState: StateFlow<DataState<Weather>> = _weatherState
 
-    private val _createResponseState: MutableLiveData<DataState<City>> = MutableLiveData()
-    val createResponseState: LiveData<DataState<City>> get() = _createResponseState
+    private val _newCityState: MutableStateFlow<DataState<City>> =
+        MutableStateFlow(DataState.None)
+    val newCityState: StateFlow<DataState<City>> get() = _newCityState
 
     fun getCities() {
         viewModelScope.launch {
@@ -51,7 +50,7 @@ class MainViewModel @Inject constructor(
 
     fun createNewCity(name: String, lon: Double, lat: Double) = viewModelScope.launch {
         cityRepository.create(City(id = 0, name = name, lon = lon, lat = lat))
-            .onEach { _createResponseState.value = it }.launchIn(viewModelScope)
+            .onEach { _newCityState.value = it }.launchIn(viewModelScope)
     }
 
     fun setCitiesStateToLoading() {

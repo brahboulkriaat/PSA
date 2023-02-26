@@ -1,5 +1,6 @@
 package com.brahimboulkriaat.psa.repository
 
+import android.util.Log
 import com.brahimboulkriaat.psa.mapper.CityEntityMapper
 import com.brahimboulkriaat.psa.mapper.CityNetworkMapper
 import com.brahimboulkriaat.psa.model.City
@@ -46,16 +47,18 @@ class CityRepository @Inject constructor(
     }
 
     suspend fun create(city: City): Flow<DataState<City>> = flow<DataState<City>> {
-        emit(DataState.Loading)
-        delay(3000)
-
         try {
             val networkEntity = networkMapper.mapToEntity(city)
             val domain = networkMapper.mapFromEntity(cityService.post(networkEntity))
+            Log.d("CityRepository domain", domain.toString())
             val rows = cityDao.insert(entityMapper.mapToEntity(domain))
             val cachedEntity = cityDao.get(city.id)
-            emit(DataState.Success<City>(entityMapper.mapFromEntity(cachedEntity)))
+            Log.d("CityRepository cache", domain.toString())
+            /*val result = entityMapper.mapFromEntity(cachedEntity) //TODO: Fix
+            Log.d("CityRepository result", result.toString())*/
+            emit(DataState.Success<City>(domain))
         } catch (e: Exception) {
+            Log.d("CityRepository", e.toString())
             emit(DataState.Error(e))
         }
     }
