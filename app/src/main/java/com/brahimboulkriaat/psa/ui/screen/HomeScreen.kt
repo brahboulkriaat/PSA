@@ -68,7 +68,12 @@ fun HomeScreen(
                 val citiesState = citiesState.collectAsStateWithLifecycle(DataState.Loading)
                 when (citiesState.value) {
                     is DataState.Loading -> LoaderComponent()
-                    is DataState.Error -> ErrorComponent()
+                    is DataState.Error -> ErrorComponent(
+                        onRetryClick = {
+                            setCitiesStateToLoading()
+                            launchRequest()
+                        }
+                    )
                     is DataState.Success<List<City>> -> {
                         CitiesComponent(
                             cities = (citiesState.value as DataState.Success<List<City>>).data,

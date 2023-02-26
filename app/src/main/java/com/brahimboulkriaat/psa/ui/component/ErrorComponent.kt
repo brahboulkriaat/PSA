@@ -11,7 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 
 @Composable
-fun ErrorComponent() {
+fun ErrorComponent(
+    onRetryClick: () -> Unit
+) {
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -19,7 +21,7 @@ fun ErrorComponent() {
     ) {
         Text(text = "Une erreur est survenue")
         Button(
-            onClick = { /*TODO*/ }
+            onClick = onRetryClick
         ) {
             Text(text = "Réessayer")
         }
@@ -29,5 +31,7 @@ fun ErrorComponent() {
 @Preview
 @Composable
 fun TestErrorComponent() {
-    ErrorComponent()
+    ErrorComponent(
+        onRetryClick = {}
+    )
 }

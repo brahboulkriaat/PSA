@@ -35,4 +35,11 @@ class MainViewModel @Inject constructor(private val cityRepository: CityReposito
     fun createNewCity(name: String, lon: Double, lat: Double) = viewModelScope.launch {
         cityRepository.create(City(id = 0, name = name, lon = lon, lat = lat)).onEach { _createResponseState.value = it }.launchIn(viewModelScope)
     }
+
+    fun setCitiesStateToLoading() {
+        _citiesState.update {
+            DataState.Loading
+        }
+    }
+
 }
