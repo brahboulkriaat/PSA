@@ -19,6 +19,7 @@ class CityRepository @Inject constructor(
 ) {
 
     suspend fun getAll(): Flow<DataState<List<City>>> = flow {
+        emit(DataState.Loading)
         try {
             val networkEntities = cityService.getAll()
             val domains = networkMapper.mapFromEntities(networkEntities)

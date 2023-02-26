@@ -29,7 +29,10 @@ fun MainScreen(mainViewModel: MainViewModel) {
                 defaultValue = 0.0F
             })
         ) {
-            CityDetailsScreen(mainViewModel = mainViewModel, navController = navController)
+            val args = it.arguments
+            val lon = args?.getFloat("lon")!!
+            val lat = args.getFloat("lat")
+            CityDetailsScreen(mainViewModel = mainViewModel, navController = navController, lon, lat)
         }
 
         composable(route = "new") {

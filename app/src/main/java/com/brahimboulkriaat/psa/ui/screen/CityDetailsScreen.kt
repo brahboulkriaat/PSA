@@ -9,7 +9,7 @@ import com.brahimboulkriaat.psa.ui.MainViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CityDetailsScreen(mainViewModel: MainViewModel, navController: NavHostController) {
+fun CityDetailsScreen(mainViewModel: MainViewModel, navController: NavHostController, lon: Float, lat: Float) {
     Scaffold( topBar = { TopAppBar(title = { Text("Details") }) }) {
         Surface(modifier = Modifier.padding(it)) {
 
