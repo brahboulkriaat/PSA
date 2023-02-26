@@ -17,7 +17,7 @@ import com.brahimboulkriaat.psa.model.City
 @Composable
 fun CitiesComponent(
     cities: List<City>,
-    onItemClick: () -> Unit
+    onItemClick: (city: City) -> Unit
 ) {
     LazyColumn(modifier = Modifier.fillMaxSize()) {
         items(cities) { city ->
@@ -32,13 +32,13 @@ fun CitiesComponent(
 @Composable
 private fun CityItemComponent(
     city: City,
-    onClick: () -> Unit
+    onClick: (city: City) -> Unit
 ) {
     ElevatedCard(
         modifier = Modifier
             .padding(all = 16.dp)
             .fillMaxWidth()
-            .clickable { onClick.invoke() }
+            .clickable { onClick.invoke(city) }
     ) {
         Surface(modifier = Modifier.padding(all = 8.dp)) {
             Text(text = city.name)

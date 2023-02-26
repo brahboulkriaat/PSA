@@ -13,7 +13,7 @@ class WeatherRepository @Inject constructor(
     private val weatherNetworkMapper: WeatherNetworkMapper
 ) {
 
-    suspend fun get(): Flow<DataState<Weather>> = flow<DataState<Weather>> {
+    suspend fun get(): Flow<DataState<Weather>> = flow {
         emit(DataState.Loading)
 
         try {
@@ -24,4 +24,5 @@ class WeatherRepository @Inject constructor(
             emit(DataState.Error(e))
         }
     }
+
 }

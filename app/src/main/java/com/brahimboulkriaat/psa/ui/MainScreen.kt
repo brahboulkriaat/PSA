@@ -1,9 +1,11 @@
 package com.brahimboulkriaat.psa.ui
 
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.brahimboulkriaat.psa.ui.screen.CityDetailsScreen
 import com.brahimboulkriaat.psa.ui.screen.HomeScreen
 import com.brahimboulkriaat.psa.ui.screen.NewCityScreen
@@ -18,17 +20,14 @@ fun MainScreen(mainViewModel: MainViewModel) {
         }
 
         composable(
-            route = "details"/*,
-            arguments = listOf(navArgument("id") {
-                type = NavType.LongType
-                // defaultValue = 0L
-            }, navArgument("lon") {
+            route = "details/{lon}/{lat}",
+            arguments = listOf(navArgument("lon") {
                 type = NavType.FloatType
                 defaultValue = 0.0F
             }, navArgument("lat") {
                 type = NavType.FloatType
                 defaultValue = 0.0F
-            })*/
+            })
         ) {
             CityDetailsScreen(mainViewModel = mainViewModel, navController = navController)
         }

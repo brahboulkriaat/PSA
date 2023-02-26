@@ -54,16 +54,6 @@ fun HomeScreen(
                         }
                 })
 
-            LaunchedEffect(
-                key1 = Unit,
-                block = {
-                    mainViewModel.itemOnClick.value =
-                        {
-                            // Toast.makeText(context, "Details", Toast.LENGTH_SHORT).show()
-                            navController.navigate("details")
-                        }
-                })
-
             mainViewModel.run {
                 val citiesState = citiesState.collectAsStateWithLifecycle(DataState.Loading)
                 when (citiesState.value) {
@@ -77,7 +67,7 @@ fun HomeScreen(
                     is DataState.Success<List<City>> -> {
                         CitiesComponent(
                             cities = (citiesState.value as DataState.Success<List<City>>).data,
-                            onItemClick = {}
+                            onItemClick = { city -> navController.navigate("details/${city.lon}/${city.lat}") }
                         )
                     }
                 }

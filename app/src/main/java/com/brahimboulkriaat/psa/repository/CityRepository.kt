@@ -10,7 +10,6 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
-import kotlin.Exception
 
 class CityRepository @Inject constructor(
     private val cityDao: CityDao,
@@ -20,8 +19,7 @@ class CityRepository @Inject constructor(
 ) {
 
     suspend fun getAll(): Flow<DataState<List<City>>> = flow {
-        delay(3000)
-        /*try {
+        try {
             val networkEntities = cityService.getAll()
             val domains = networkMapper.mapFromEntities(networkEntities)
             cityDao.insert(*entityMapper.mapToEntities(domains).toTypedArray())
@@ -29,8 +27,7 @@ class CityRepository @Inject constructor(
             emit(DataState.Success(entityMapper.mapFromEntities(cacheEntities)))
         } catch (e: Exception) {
             emit(DataState.Error(e))
-        }*/
-        emit(DataState.Error(java.lang.Exception()))
+        }
     }
 
     suspend fun get(id: Int): Flow<DataState<City>> = flow {

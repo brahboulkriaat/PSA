@@ -17,7 +17,6 @@ import javax.inject.Inject
 class MainViewModel @Inject constructor(private val cityRepository: CityRepository) : ViewModel() {
 
     val fabOnClick = mutableStateOf<() -> Unit>({})
-    val itemOnClick = mutableStateOf<() -> Unit>({})
     val isFabExpanded = mutableStateOf<Boolean>(true)
 
     private val _citiesState: MutableStateFlow<DataState<List<City>>> = MutableStateFlow(DataState.Loading)
