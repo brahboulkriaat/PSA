@@ -20,7 +20,6 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
 
         mainViewModel.run {
-            launchRequest()
             setContent {
                 MaterialTheme {
                     MainScreen(this)

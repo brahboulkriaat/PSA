@@ -32,7 +32,7 @@ fun MainScreen(mainViewModel: MainViewModel) {
             val args = it.arguments
             val lon = args?.getFloat("lon")!!
             val lat = args.getFloat("lat")
-            CityDetailsScreen(mainViewModel = mainViewModel, navController = navController, lon, lat)
+            CityDetailsScreen(mainViewModel = mainViewModel, lon, lat)
         }
 
         composable(route = "new") {

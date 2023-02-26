@@ -13,16 +13,13 @@ class WeatherRepository @Inject constructor(
     private val weatherNetworkMapper: WeatherNetworkMapper
 ) {
 
-    suspend fun get(): Flow<DataState<Weather>> = flow {
-        emit(DataState.Loading)
-
+    suspend fun get(lon: Float, lat: Float): Flow<DataState<Weather>> = flow {
         try {
-            val weatherNetwork = weatherService.get(lat = 48.856614, lon = 2.352222)
+            val weatherNetwork = weatherService.get(lon = lon, lat = lat)
             val weather = weatherNetworkMapper.mapFromEntity(weatherNetwork)
-            emit(DataState.Success<Weather>(weather))
+            emit(DataState.Success(weather))
         } catch (e: Exception) {
             emit(DataState.Error(e))
         }
     }
-
 }

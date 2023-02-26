@@ -7,8 +7,8 @@ interface WeatherService {
 
     @GET("onecall")
     suspend fun get(
-        @Query("lat") lat: Double,
-        @Query("lon") lon: Double,
+        @Query("lon") lon: Float,
+        @Query("lat") lat: Float,
         @Query("exclude") exclude: String = "current,minutely,hourly,daily,alerts",
         @Query("appid") appId: String = "343adb07ba22708eeb36a0d0cb19fe5c"
     ): WeatherNetwork

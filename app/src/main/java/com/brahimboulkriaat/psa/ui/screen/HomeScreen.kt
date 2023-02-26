@@ -31,6 +31,25 @@ fun HomeScreen(
         floatingActionButton = { NewCityFab(mainViewModel) }
     ) {
         Surface(modifier = Modifier.padding(it)) {
+            mainViewModel.run {
+                getCities()
+                val citiesState = citiesState.collectAsStateWithLifecycle(DataState.Loading)
+                when (citiesState.value) {
+                    is DataState.Loading -> LoaderComponent()
+                    is DataState.Error -> ErrorComponent(
+                        onRetryClick = {
+                            setCitiesStateToLoading()
+                            getCities()
+                        }
+                    )
+                    is DataState.Success<List<City>> -> {
+                        CitiesComponent(
+                            cities = (citiesState.value as DataState.Success<List<City>>).data,
+                            onItemClick = { city -> navController.navigate("details/${city.lon}/${city.lat}") }
+                        )
+                    }
+                }
+            }
             val listState = rememberLazyListState()
             val expandedFabState = remember {
                 derivedStateOf {
@@ -53,25 +72,6 @@ fun HomeScreen(
                             navController.navigate("new")
                         }
                 })
-
-            mainViewModel.run {
-                val citiesState = citiesState.collectAsStateWithLifecycle(DataState.Loading)
-                when (citiesState.value) {
-                    is DataState.Loading -> LoaderComponent()
-                    is DataState.Error -> ErrorComponent(
-                        onRetryClick = {
-                            setCitiesStateToLoading()
-                            launchRequest()
-                        }
-                    )
-                    is DataState.Success<List<City>> -> {
-                        CitiesComponent(
-                            cities = (citiesState.value as DataState.Success<List<City>>).data,
-                            onItemClick = { city -> navController.navigate("details/${city.lon}/${city.lat}") }
-                        )
-                    }
-                }
-            }
         }
     }
 }
